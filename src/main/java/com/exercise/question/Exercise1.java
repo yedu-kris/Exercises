@@ -9,6 +9,7 @@ public class Exercise1 {
     public static void main(String[] args) {
 
         Stream<Integer> numberStreams = StreamSources.intNumbersStream();
+        Stream<User> userStream = StreamSources.userStream();
 
         // Use StreamSources.intNumbersStream() and StreamSources.userStream()
 
@@ -23,6 +24,11 @@ public class Exercise1 {
         // Print the second and third numbers in intNumbersStream that's greater than 5
         // TODO: Write code here
 
+        numberStreams.filter(number->number>5).
+                skip(1).
+                limit(2).
+                forEach(System.out::println);
+
 //        Flux<Integer> streamInt = Flux.fromStream(numberStreams);
 //        int[] c = {0};
 //        streamInt.filter(i -> i > 5).
@@ -36,19 +42,29 @@ public class Exercise1 {
         //  Print the first number in intNumbersStream that's greater than 5.
         //  If nothing is found, print -1
         // TODO: Write code here
-
-
-        Flux<Integer> streamInt = Flux.fromStream(numberStreams);
-        int[] c = {0};
-        streamInt.filter(i -> i > 5).
-                take(1).
-                defaultIfEmpty(-1).
-                subscribe(System.out::println);
+       Integer out= StreamSources.intNumbersStream().
+                filter(number->number>5).
+                findFirst().
+               orElse(-1);
+        System.out.println(String.valueOf(out));
+//        Flux<Integer> streamInt = Flux.fromStream(numberStreams);
+//        int[] c = {0};
+//        streamInt.filter(i -> i > 5).
+//                take(1).
+//                defaultIfEmpty(-1).
+//                subscribe(System.out::println);
         // Print first names of all users in userStream
-        // TODO: Write code here
 
+        //userStream.map(name->name.getFirstName()).forEach(System.out::println);
         // Print first names in userStream for users that have IDs from number stream
-        // TODO: Write code here
+
+
+        StreamSources.intNumbersStream().flatMap(id->
+            StreamSources.userStream().filter(user -> user.getId()== id)
+        ).forEach(user -> System.out.println(user.getFirstName()));
+
+
+
 
     }
 
