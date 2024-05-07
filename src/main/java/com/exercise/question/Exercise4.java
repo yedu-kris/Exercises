@@ -11,6 +11,7 @@ public class Exercise4 {
         );
 
         Integer v = ReactiveSources.intNumberMono().block();
+        System.out.println(v);
         System.out.println("Press a key to end");
         System.in.read();
     }
