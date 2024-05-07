@@ -9,9 +9,8 @@ public class Exercise4 {
         ReactiveSources.intNumberMono().subscribe(
                 number-> System.out.println(number)
         );
-        
+
         Integer v = ReactiveSources.intNumberMono().block();
-        System.out.println(v);
         System.out.println("Press a key to end");
         System.in.read();
     }
