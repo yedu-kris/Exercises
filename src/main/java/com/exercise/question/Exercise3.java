@@ -12,7 +12,11 @@ public class Exercise3 {
         Mono<List<Integer>> mono = ReactiveSources.intNumbersFlux().collectList();
         mono.subscribe(list->{
             System.out.println(list+" "+list.size());
-        });
+        }
+        ,
+                error->System.err.println(error.getMessage()),
+                ()-> System.out.println("Completed")
+        );
         System.out.println("Press a key to end");
         System.in.read();
     }
